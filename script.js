@@ -3,7 +3,6 @@ document.getElementById('form').addEventListener('submit', function(event) {
 
     const nome = document.getElementById('nome').value.trim();  // Valor do campo nome
     const cpf = document.getElementById('cpf').value.trim();    // Valor do campo cpf
-    const documentos = document.getElementById('documentos').files; // Arquivos anexados
 
     // Exibir o loader enquanto o processamento está em andamento
     document.getElementById('loader').style.display = 'block';
@@ -14,18 +13,18 @@ document.getElementById('form').addEventListener('submit', function(event) {
         setTimeout(() => { // Simula um atraso no processamento
             const resultadoDiv = document.getElementById('resultado');
             
-            let documentosAnexados = 'Nenhum';
-            if (documentos.length > 0) {
-                documentosAnexados = `${documentos.length} arquivo(s) anexado(s)`;
-            }
-
             // Exibindo os dados formatados
-            resultadoDiv.innerHTML = `
+            const resultadoTexto = `
                 <p><strong>SOLICITAÇÃO PRIORIDADE QUALIFY</strong></p>
                 <p><strong>NOME:</strong> ${nome}</p>
                 <p><strong>CPF:</strong> ${cpf}</p>
-                <p><strong>DOCUMENTOS ANEXADOS:</strong> ${documentosAnexados}</p>
+                <p><strong>DOCUMENTOS ANEXADOS:</strong> Nenhum</p>
             `;
+            resultadoDiv.innerHTML = resultadoTexto;
+
+            // Exibir o botão de copiar
+            document.getElementById('copiar').style.display = 'block';
+
             resultadoDiv.style.display = 'block';
             document.getElementById('loader').style.display = 'none'; // Ocultar o loader
         }, 1500); // Simula 1,5 segundos de processamento
@@ -69,4 +68,14 @@ document.getElementById('cpf').addEventListener('input', function(event) {
     cpf = cpf.replace(/\D/g, ''); // Remove qualquer coisa que não seja número
     cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); // Aplica a máscara
     event.target.value = cpf;
+});
+
+// Função para copiar o resultado para a área de transferência
+document.getElementById('copiar').addEventListener('click', function() {
+    const resultadoTexto = document.getElementById('resultado').innerText;
+    navigator.clipboard.writeText(resultadoTexto).then(() => {
+        alert("Texto copiado para a área de transferência!");
+    }).catch(err => {
+        alert("Erro ao copiar o texto: " + err);
+    });
 });
