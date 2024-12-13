@@ -15,17 +15,19 @@ document.getElementById('form').addEventListener('submit', function(event) {
             
             // Exibindo os dados formatados
             const resultadoTexto = `
-                <p><strong>SOLICITAÇÃO PRIORIDADE QUALIFY</strong></p>
-                <p><strong>NOME:</strong> ${nome}</p>
-                <p><strong>CPF:</strong> ${cpf}</p>
-                <p><strong>DOCUMENTOS ANEXADOS:</strong> Nenhum</p>
+                SOLICITAÇÃO PRIORIDADE QUALIFY
+
+                NOME: ${nome}
+
+                CPF: ${cpf}
+
+                DOCUMENTOS ANEXADOS: ✅
             `;
-            resultadoDiv.innerHTML = resultadoTexto;
+            resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
 
             // Exibir o botão de copiar
-            const botaoCopiar = document.createElement('button');
-            botaoCopiar.textContent = 'Copiar';
-            botaoCopiar.className = 'copiar';
+            const botaoCopiar = document.getElementById('copiar');
+            botaoCopiar.style.display = 'block';
             botaoCopiar.addEventListener('click', function() {
                 navigator.clipboard.writeText(resultadoTexto).then(() => {
                     alert("Texto copiado para a área de transferência!");
@@ -34,7 +36,6 @@ document.getElementById('form').addEventListener('submit', function(event) {
                 });
             });
 
-            resultadoDiv.appendChild(botaoCopiar);
             resultadoDiv.style.display = 'block';
             document.getElementById('loader').style.display = 'none'; // Ocultar o loader
         }, 1500); // Simula 1,5 segundos de processamento
