@@ -25,7 +25,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
             `;
             resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
 
-            // Criar e exibir o botão de copiar
+            // Exibir o botão de copiar
             const botaoCopiar = document.createElement('button');
             botaoCopiar.textContent = 'Copiar';
             botaoCopiar.className = 'copiar';
@@ -37,10 +37,9 @@ document.getElementById('form').addEventListener('submit', function(event) {
                 });
             });
 
-            // Adicionar o botão de copiar no DOM
+            // Garantir que o botão "Copiar" apareça após o conteúdo ser gerado
             resultadoDiv.appendChild(botaoCopiar);
 
-            // Exibir o resultado e o botão "Copiar"
             resultadoDiv.style.display = 'block';
             document.getElementById('loader').style.display = 'none'; // Ocultar o loader
         }, 1500); // Simula 1,5 segundos de processamento
