@@ -78,3 +78,17 @@ input[type="file"] {
 input[type="file"]:hover {
     cursor: pointer;
 }
+
+.copiar {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.copiar:hover {
+    background-color: #1976D2;
+}
