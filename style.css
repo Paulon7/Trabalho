@@ -14,7 +14,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 320px;
 }
 
 h1 {
@@ -63,3 +63,18 @@ button:hover {
     font-size: 14px;
 }
 
+.loader {
+    text-align: center;
+    font-size: 16px;
+    color: #4CAF50;
+}
+
+input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input[type="file"]:hover {
+    cursor: pointer;
+}
