@@ -3,21 +3,70 @@ document.getElementById('form').addEventListener('submit', function(event) {
 
     const nome = document.getElementById('nome').value.trim();  // Valor do campo nome
     const cpf = document.getElementById('cpf').value.trim();    // Valor do campo cpf
+    const documentos = document.getElementById('documentos').files; // Arquivos anexados
 
-    // Verificar se o CPF está no formato correto (apenas números e 11 dígitos)
-    if (/^\d{11}$/.test(cpf)) {
-        const resultadoDiv = document.getElementById('resultado');
-        
-        // Exibindo os dados formatados
-        resultadoDiv.innerHTML = `
-            <p><strong>SOLICITAÇÃO PRIORIDADE QUALIFY</strong></p>
-            <p><strong>NOME:</strong> ${nome}</p>
-            <p><strong>CPF:</strong> ${cpf}</p>
-            <p><strong>DOCUMENTOS ANEXADOS:</strong> ✅</p>
-        `;
+    // Exibir o loader enquanto o processamento está em andamento
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('resultado').style.display = 'none';
 
-        resultadoDiv.style.display = 'block';  // Exibe o resultado
+    // Validação do CPF (apenas números e 11 dígitos)
+    if (validaCPF(cpf)) {
+        setTimeout(() => { // Simula um atraso no processamento
+            const resultadoDiv = document.getElementById('resultado');
+            
+            let documentosAnexados = 'Nenhum';
+            if (documentos.length > 0) {
+                documentosAnexados = `${documentos.length} arquivo(s) anexado(s)`;
+            }
+
+            // Exibindo os dados formatados
+            resultadoDiv.innerHTML = `
+                <p><strong>SOLICITAÇÃO PRIORIDADE QUALIFY</strong></p>
+                <p><strong>NOME:</strong> ${nome}</p>
+                <p><strong>CPF:</strong> ${cpf}</p>
+                <p><strong>DOCUMENTOS ANEXADOS:</strong> ${documentosAnexados}</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            document.getElementById('loader').style.display = 'none'; // Ocultar o loader
+        }, 1500); // Simula 1,5 segundos de processamento
     } else {
+        document.getElementById('loader').style.display = 'none'; // Ocultar o loader
         alert("Por favor, insira um CPF válido (apenas números e 11 dígitos).");
     }
+});
+
+// Função para validar CPF (sem formatação)
+function validaCPF(cpf) {
+    cpf = cpf.replace(/[^\d]+/g, ''); // Remove qualquer caractere não numérico
+
+    // Verificação de comprimento
+    if (cpf.length !== 11) return false;
+
+    // Verificar se todos os números são iguais (ex: 111.111.111.11)
+    if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+    // Validação dos dois primeiros dígitos
+    let soma = 0;
+    let resto;
+    for (let i = 1; i <= 9; i++) soma += parseInt(cpf[i - 1]) * (11 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf[9])) return false;
+
+    // Validação do terceiro dígito
+    soma = 0;
+    for (let i = 1; i <= 10; i++) soma += parseInt(cpf[i - 1]) * (12 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf[10])) return false;
+
+    return true;
+}
+
+// Máscara de CPF
+document.getElementById('cpf').addEventListener('input', function(event) {
+    let cpf = event.target.value;
+    cpf = cpf.replace(/\D/g, ''); // Remove qualquer coisa que não seja número
+    cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); // Aplica a máscara
+    event.target.value = cpf;
 });
