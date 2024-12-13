@@ -26,8 +26,9 @@ document.getElementById('form').addEventListener('submit', function(event) {
             resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
 
             // Exibir o botão de copiar
-            const botaoCopiar = document.getElementById('copiar');
-            botaoCopiar.style.display = 'block';
+            const botaoCopiar = document.createElement('button');
+            botaoCopiar.textContent = 'Copiar';
+            botaoCopiar.className = 'copiar';
             botaoCopiar.addEventListener('click', function() {
                 navigator.clipboard.writeText(resultadoTexto).then(() => {
                     alert("Texto copiado para a área de transferência!");
@@ -35,6 +36,9 @@ document.getElementById('form').addEventListener('submit', function(event) {
                     alert("Erro ao copiar o texto: " + err);
                 });
             });
+
+            // Garantir que o botão "Copiar" apareça após o conteúdo ser gerado
+            resultadoDiv.appendChild(botaoCopiar);
 
             resultadoDiv.style.display = 'block';
             document.getElementById('loader').style.display = 'none'; // Ocultar o loader
