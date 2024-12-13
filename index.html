@@ -16,14 +16,12 @@
             <label for="cpf">CPF:</label>
             <input type="text" id="cpf" required maxlength="14" placeholder="XXX.XXX.XXX-XX">
             <br><br>
-            <label for="documentos">Anexar Documentos:</label>
-            <input type="file" id="documentos" multiple>
-            <br><br>
             <button type="submit">Gerar Solicitação</button>
         </form>
 
         <div id="resultado" class="resultado">
             <!-- O resultado aparecerá aqui -->
+            <button id="copiar" class="copiar" style="display: none;">Copiar</button>
         </div>
         
         <div id="loader" class="loader" style="display:none;">Processando...</div>
