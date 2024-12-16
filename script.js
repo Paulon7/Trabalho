@@ -15,13 +15,10 @@ document.getElementById('form').addEventListener('submit', function(event) {
             
             // Exibindo os dados formatados
             const resultadoTexto = `
-                SOLICITAÇÃO PRIORIDADE QUALIFY
-
-                NOME: ${nome}
-
-                CPF: ${cpf}
-
-                DOCUMENTOS ANEXADOS: ✅
+SOLICITAÇÃO PRIORIDADE QUALIFY
+NOME: ${nome}
+CPF: ${cpf}
+DOCUMENTOS ANEXADOS: ✅
             `;
             resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
 
