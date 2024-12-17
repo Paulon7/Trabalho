@@ -3,6 +3,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
 
     const nome = document.getElementById('nome').value.trim();  // Valor do campo nome
     const cpf = document.getElementById('cpf').value.trim();    // Valor do campo cpf
+    const horaSelecionada = document.querySelector('.hora-button.selected')?.dataset.hora || "Não selecionado";
 
     // Exibir o loader enquanto o processamento está em andamento
     document.getElementById('loader').style.display = 'block';
@@ -18,6 +19,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
 SOLICITAÇÃO PRIORIDADE QUALIFY
 NOME: ${nome}
 CPF: ${cpf}
+HORA SELECIONADA: ${horaSelecionada}
 DOCUMENTOS ANEXADOS: ✅
             `;
             resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
@@ -81,3 +83,10 @@ document.getElementById('cpf').addEventListener('input', function(event) {
     cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); // Aplica a máscara
     event.target.value = cpf;
 });
+
+// Adicionar evento nos botões de hora
+const horaButtons = document.querySelectorAll('.hora-button');
+horaButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Remover a seleção de todos os botões
+        
