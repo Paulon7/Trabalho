@@ -50,12 +50,3 @@ DOCUMENTOS ANEXADOS: ✅
 
 // Função para validar CPF (sem formatação)
 function validaCPF(cpf) {
-    cpf = cpf.replace(/[^\d]+/g, ''); // Remove qualquer caractere não numérico
-
-    // Verificação de comprimento
-    if (cpf.length !== 11) return false;
-
-    // Verificar se todos os números são iguais (ex: 111.111.111.11)
-    if (/^(\d)\1{10}$/.test(cpf)) return false;
-
-    // Validação dos dois primeiros
