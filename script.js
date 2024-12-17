@@ -3,7 +3,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
 
     const nome = document.getElementById('nome').value.trim();  // Valor do campo nome
     const cpf = document.getElementById('cpf').value.trim();    // Valor do campo cpf
-    const horaSelecionada = document.querySelector('.hora-button.selected')?.dataset.hora || "Não selecionado";
+    const horas = document.querySelector('.hora-button.selected')?.dataset.hora || ''; // Hora selecionada
 
     // Exibir o loader enquanto o processamento está em andamento
     document.getElementById('loader').style.display = 'block';
@@ -19,7 +19,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
 SOLICITAÇÃO PRIORIDADE QUALIFY
 NOME: ${nome}
 CPF: ${cpf}
-HORA SELECIONADA: ${horaSelecionada}
+HORA SELECIONADA: ${horas ? horas : 'Nenhuma hora selecionada'}
 DOCUMENTOS ANEXADOS: ✅
             `;
             resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
@@ -41,12 +41,4 @@ DOCUMENTOS ANEXADOS: ✅
 
             resultadoDiv.style.display = 'block';
             document.getElementById('loader').style.display = 'none'; // Ocultar o loader
-        }, 1500); // Simula 1,5 segundos de processamento
-    } else {
-        document.getElementById('loader').style.display = 'none'; // Ocultar o loader
-        alert("Por favor, insira um CPF válido (apenas números e 11 dígitos).");
-    }
-});
-
-// Função para validar CPF (sem formatação)
-function validaCPF(cpf) {
+        }, 1500); // Simula 1,5
