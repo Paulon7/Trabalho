@@ -10,12 +10,18 @@ body {
 }
 
 .container {
+    display: flex; /* Para exibir os itens lado a lado */
+    justify-content: space-between;
+    width: 100%;
+    max-width: 960px;
+}
+
+.form-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;  /* Ajusta a largura para caber em telas menores */
+    width: 45%; /* Formulário ocupa 45% da largura */
 }
 
 h1 {
@@ -38,12 +44,11 @@ input {
 }
 
 .resultado {
-    margin-top: 20px;
-    display: none;
-    padding: 10px;
     background-color: #eaf8e6;
-    border-radius: 4px;
-    font-size: 14px;
+    border-radius: 8px;
+    padding: 20px;
+    width: 45%; /* Resultado ocupa 45% da largura */
+    display: none; /* Inicialmente invisível */
 }
 
 .loader {
@@ -81,7 +86,7 @@ input {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 12px;  /* Ajustei o tamanho da fonte */
+    font-size: 12px;
     flex: 1 0 30%;
     text-align: center;
 }
@@ -100,7 +105,7 @@ input {
   color: #FFFFFF;
   display: flex;
   font-family: Phantomsans, sans-serif;
-  font-size: 16px;  /* Reduzi o tamanho da fonte */
+  font-size: 16px;
   justify-content: center;
   line-height: 1em;
   max-width: 100%;
