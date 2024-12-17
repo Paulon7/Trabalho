@@ -19,7 +19,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
 SOLICITAÇÃO PRIORIDADE QUALIFY
 NOME: ${nome}
 CPF: ${cpf}
-HORA SELECIONADA: ${horas ? horas : 'Nenhuma hora selecionada'}
+TEMPO: ${horas ? horas : 'Nenhuma hora selecionada'}
 DOCUMENTOS ANEXADOS: ✅
             `;
             resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
