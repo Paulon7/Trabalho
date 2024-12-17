@@ -8,38 +8,40 @@
 </head>
 <body>
     <div class="container">
-        <h1>Formulário de Solicitação</h1>
-        <form id="form">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" required>
-            <br><br>
-            <label for="cpf">CPF:</label>
-            <input type="text" id="cpf" required maxlength="14" placeholder="XXX.XXX.XXX-XX">
-            <br><br>
+        <div class="form-container">
+            <h1>Formulário de Solicitação</h1>
+            <form id="form">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" required>
+                <br><br>
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" required maxlength="14" placeholder="XXX.XXX.XXX-XX">
+                <br><br>
 
-            <!-- Botões de hora -->
-            <div class="hora-buttons">
-                <button type="button" class="hora-button" data-hora="+1">+1 Hora</button>
-                <button type="button" class="hora-button" data-hora="+2">+2 Horas</button>
-                <button type="button" class="hora-button" data-hora="+3">+3 Horas</button>
-                <button type="button" class="hora-button" data-hora="+4">+4 Horas</button>
-                <button type="button" class="hora-button" data-hora="+5">+5 Horas</button>
-                <button type="button" class="hora-button" data-hora="+6">+6 Horas</button>
-                <button type="button" class="hora-button" data-hora="+7">+7 Horas</button>
-                <button type="button" class="hora-button" data-hora="+8">+8 Horas</button>
-                <button type="button" class="hora-button" data-hora="+9">+9 Horas</button>
-            </div>
+                <!-- Botões de hora -->
+                <div class="hora-buttons">
+                    <button type="button" class="hora-button" data-hora="+1">+1 Hora</button>
+                    <button type="button" class="hora-button" data-hora="+2">+2 Horas</button>
+                    <button type="button" class="hora-button" data-hora="+3">+3 Horas</button>
+                    <button type="button" class="hora-button" data-hora="+4">+4 Horas</button>
+                    <button type="button" class="hora-button" data-hora="+5">+5 Horas</button>
+                    <button type="button" class="hora-button" data-hora="+6">+6 Horas</button>
+                    <button type="button" class="hora-button" data-hora="+7">+7 Horas</button>
+                    <button type="button" class="hora-button" data-hora="+8">+8 Horas</button>
+                    <button type="button" class="hora-button" data-hora="+9">+9 Horas</button>
+                </div>
 
-            <br><br>
-            <button class="button-64" role="button"><span class="text">Solicitação</span></button>
-        </form>
+                <br><br>
+                <button class="button-64" role="button"><span class="text">Solicitação</span></button>
+            </form>
+        </div>
 
         <div id="resultado" class="resultado">
             <!-- O resultado aparecerá aqui -->
         </div>
-
-        <div id="loader" class="loader" style="display:none;">Processando...</div>
     </div>
+
+    <div id="loader" class="loader" style="display:none;">Processando...</div>
 
     <script src="script.js"></script>
 </body>
