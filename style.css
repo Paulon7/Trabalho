@@ -83,7 +83,7 @@ font-family: Phantomsans, sans-serif;
 
 .hora-button {
     padding: 8px;
-    background-color: #FFC107;
+    background-color: #1800ff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -93,7 +93,7 @@ font-family: Phantomsans, sans-serif;
 }
 
 .hora-button:hover {
-    background-color: #FF9800;
+    background-color: #1100b3;
 }
 
 .button-64 {
