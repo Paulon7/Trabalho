@@ -22,7 +22,7 @@ CPF: ${cpf}
 TEMPO: ${horas ? horas : 'Nenhuma hora selecionada'}
 DOCUMENTOS ANEXADOS: ✅
 CIDADE:
-Responsavel pela venda:
+Responsável pela venda:
             `;
             resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
 
