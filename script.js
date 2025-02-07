@@ -7,14 +7,20 @@ document.getElementById('form').addEventListener('submit', function(event) {
     const cidade = document.getElementById('cidade').value;  // Valor da cidade selecionada
 
     // Exibir o loader enquanto o processamento está em andamento
-    document.getElementById('loader').style.display = 'block';
-    document.getElementById('resultado').style.display = 'none';
+    const loader = document.getElementById('loader');
+    const resultadoDiv = document.getElementById('resultado');
+
+    if (!loader || !resultadoDiv) {
+        alert('Erro: Elementos de loader ou resultado não encontrados.');
+        return;
+    }
+
+    loader.style.display = 'block';
+    resultadoDiv.style.display = 'none';
 
     // Validação do CPF (apenas números e 11 dígitos)
     if (validaCPF(cpf)) {
         setTimeout(() => { // Simula um atraso no processamento
-            const resultadoDiv = document.getElementById('resultado');
-            
             // Exibindo os dados formatados
             const resultadoTexto = `
 SOLICITAÇÃO PRIORIDADE QUALIFY
@@ -25,6 +31,7 @@ CIDADE: ${cidade ? cidade : 'Cidade não selecionada'}
 DOCUMENTOS ANEXADOS: ✅
 RESPONSÁVEL PELA VENDA:
             `;
+
             resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
 
             // Exibir o botão de copiar
@@ -42,11 +49,13 @@ RESPONSÁVEL PELA VENDA:
             // Garantir que o botão "Copiar" apareça após o conteúdo ser gerado
             resultadoDiv.appendChild(botaoCopiar);
 
+            // Exibir o resultado e ocultar o loader
             resultadoDiv.style.display = 'block';
-            document.getElementById('loader').style.display = 'none'; // Ocultar o loader
+            loader.style.display = 'none';
         }, 1500); // Simula 1,5 segundos de espera
     } else {
         alert("CPF inválido!");
-        document.getElementById('loader').style.display = 'none';
+        loader.style.display = 'none';
     }
 });
+
