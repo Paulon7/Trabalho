@@ -4,6 +4,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
     const nome = document.getElementById('nome').value.trim();  // Valor do campo nome
     const cpf = document.getElementById('cpf').value.trim();    // Valor do campo cpf
     const horas = document.querySelector('.hora-button.selected')?.dataset.hora || ''; // Hora selecionada
+    const cidade = document.getElementById('cidade').value;  // Valor da cidade selecionada
 
     // Exibir o loader enquanto o processamento está em andamento
     document.getElementById('loader').style.display = 'block';
@@ -20,9 +21,9 @@ SOLICITAÇÃO PRIORIDADE QUALIFY
 NOME: ${nome}
 CPF: ${cpf}
 TEMPO: ${horas ? horas : 'Nenhuma hora selecionada'}
+CIDADE: ${cidade ? cidade : 'Cidade não selecionada'}
 DOCUMENTOS ANEXADOS: ✅
-CIDADE:
-Responsável pela venda:
+RESPONSÁVEL PELA VENDA:
             `;
             resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
 
@@ -49,46 +50,3 @@ Responsável pela venda:
         document.getElementById('loader').style.display = 'none';
     }
 });
-
-// Adicionando a funcionalidade de selecionar horas
-const horaButtons = document.querySelectorAll('.hora-button');
-horaButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        // Remover a seleção de todos os botões
-        horaButtons.forEach(btn => btn.classList.remove('selected'));
-        // Adicionar a classe de seleção no botão clicado
-        this.classList.add('selected');
-    });
-});
-
-// Função para validar o CPF
-function validaCPF(cpf) {
-    cpf = cpf.replace(/\D/g, '');  // Remove todos os caracteres não numéricos
-
-    if (cpf.length !== 11) return false; // CPF deve ter 11 dígitos
-
-    // Verificação de dígitos verificadores (básica)
-    let soma = 0;
-    let resto;
-
-    for (let i = 0; i < 9; i++) {
-        soma += parseInt(cpf[i]) * (10 - i);
-    }
-
-    resto = soma % 11;
-    if (resto < 2) resto = 0;
-    else resto = 11 - resto;
-
-    if (parseInt(cpf[9]) !== resto) return false;
-
-    soma = 0;
-    for (let i = 0; i < 10; i++) {
-        soma += parseInt(cpf[i]) * (11 - i);
-    }
-
-    resto = soma % 11;
-    if (resto < 2) resto = 0;
-    else resto = 11 - resto;
-
-    return parseInt(cpf[10]) === resto;
-}
