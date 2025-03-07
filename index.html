@@ -18,17 +18,34 @@
                 <input type="text" id="cpf" required maxlength="14" placeholder="XXX.XXX.XXX-XX">
                 <br><br>
 
-                <h1>Selecione as horas</h1>
-                <div class="hora-buttons">
-                    <button type="button" class="hora-button" data-hora="+1">+1 Hora</button>
-                    <button type="button" class="hora-button" data-hora="+2">+2 Horas</button>
-                    <button type="button" class="hora-button" data-hora="+3">+3 Horas</button>
-                    <button type="button" class="hora-button" data-hora="+4">+4 Horas</button>
-                    <button type="button" class="hora-button" data-hora="+5">+5 Horas</button>
-                    <button type="button" class="hora-button" data-hora="+6">+6 Horas</button>
-                    <button type="button" class="hora-button" data-hora="+7">+7 Horas</button>
-                    <button type="button" class="hora-button" data-hora="+8">+8 Horas</button>
-                    <button type="button" class="hora-button" data-hora="+9">+9 Horas</button>
+                <label for="responsavel">Responsável pela Venda:</label>
+                <input type="text" id="responsavel" required>
+                <br><br>
+
+                <h1>Selecione o Tempo</h1>
+                <div>
+                    <label for="tipo-tempo">Selecione o tipo de tempo:</label>
+                    <select id="tipo-tempo">
+                        <option value="hora">Hora(s)</option>
+                        <option value="minuto">Minuto(s)</option>
+                    </select>
+                </div>
+
+                <div id="hora-buttons" class="hora-buttons">
+                    <button type="button" class="hora-button" data-hora="1">+1 Hora</button>
+                    <button type="button" class="hora-button" data-hora="2">+2 Horas</button>
+                    <button type="button" class="hora-button" data-hora="3">+3 Horas</button>
+                    <button type="button" class="hora-button" data-hora="4">+4 Horas</button>
+                    <button type="button" class="hora-button" data-hora="5">+5 Horas</button>
+                    <button type="button" class="hora-button" data-hora="6">+6 Horas</button>
+                    <button type="button" class="hora-button" data-hora="7">+7 Horas</button>
+                    <button type="button" class="hora-button" data-hora="8">+8 Horas</button>
+                    <button type="button" class="hora-button" data-hora="9">+9 Horas</button>
+                </div>
+
+                <div id="minuto-buttons" class="hora-buttons" style="display: none;">
+                    <!-- Botões de minutos de 1 a 60 -->
+                    <div id="minuto-container"></div>
                 </div>
 
                 <br><br>
@@ -37,7 +54,8 @@
                 <label for="cidade">Cidade:</label>
                 <select id="cidade" required>
                     <option value="">Selecione uma cidade</option>
-                    <option value="Araxa">Araxá</option>
+                    <option value="Araxá">Araxá</option>
+                    <option value="Campos Altos">Campos Altos</option>
                     <option value="Conquista">Conquista</option>
                     <option value="Coromandel">Coromandel</option>
                     <option value="Delta">Delta</option>
@@ -60,9 +78,16 @@
         <div id="resultado" class="resultado">
             <!-- O resultado aparecerá aqui -->
         </div>
-    </div>
 
-    <div id="loader" class="loader" style="display:none;">Processando...</div>
+        <div id="loader" class="loader" style="display:none;">Processando...</div>
+
+        <div id="relatorio">
+            <button onclick="gerarRelatorio()">Gerar Relatório Completo</button>
+            <div id="relatorio-conteudo"></div>
+        </div>
+        <button id="copiar-relatorio" class="copiar">Copiar Relatório Completo</button>
+
+    </div>
 
     <script src="script.js"></script>
 </body>
