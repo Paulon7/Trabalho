@@ -1,79 +1,89 @@
+const solicitacoes = [];  // Array para armazenar as solicitações
+
 document.getElementById('form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const nome = document.getElementById('nome').value.trim();  // Valor do campo nome
-    const cpf = document.getElementById('cpf').value.trim();    // Valor do campo cpf
-    const horas = document.querySelector('.hora-button.selected')?.dataset.hora || ''; // Hora selecionada
-    const cidade = document.getElementById('cidade').value;  // Valor da cidade selecionada
+    const nome = document.getElementById('nome').value.trim();
+    const cpf = document.getElementById('cpf').value.trim();
+    const responsavel = document.getElementById('responsavel').value.trim();
+    const tipoTempo = document.getElementById('tipo-tempo').value;
+    const cidade = document.getElementById('cidade').value;
 
-    // Obter elementos de loader e resultado
-    const loader = document.getElementById('loader');
-    const resultadoDiv = document.getElementById('resultado');
+    let tempoSelecionado = '';
+    if (tipoTempo === 'hora') {
+        tempoSelecionado = document.querySelector('.hora-button.selected')?.dataset.hora || '';
+    } else {
+        tempoSelecionado = document.querySelector('.hora-button.selected')?.dataset.minuto || '';
+    }
 
-    // Verificar se os elementos existem no DOM
-    if (!loader || !resultadoDiv) {
-        alert('Erro: Elementos de loader ou resultado não encontrados.');
+    // Verificação de CPF
+    if (!validaCPF(cpf)) {
+        alert("CPF inválido!");
         return;
     }
 
-    // Exibir o loader enquanto o processamento está em andamento
-    loader.style.display = 'block';
-    resultadoDiv.style.display = 'none';
+    // Armazenar solicitação
+    solicitacoes.push({
+        nome,
+        cpf,
+        responsavel,
+        tempo: tempoSelecionado,
+        tipoTempo,
+        cidade,
+    });
 
-    // Validação do CPF (apenas números e 11 dígitos)
-    if (validaCPF(cpf)) {
-        setTimeout(() => { // Simula um atraso no processamento
+    alert("Solicitação registrada com sucesso!");
+});
 
-            // Exibindo os dados formatados
-            const resultadoTexto = `
-SOLICITAÇÃO PRIORIDADE QUALIFY
-NOME: ${nome}
-CPF: ${cpf}
-TEMPO: ${horas ? horas : 'Nenhuma hora selecionada'}
-CIDADE: ${cidade ? cidade : 'Cidade não selecionada'}
-DOCUMENTOS ANEXADOS: ✅
-RESPONSÁVEL PELA VENDA:
-            `;
+document.getElementById('tipo-tempo').addEventListener('change', function() {
+    const tipo = this.value;
+    const horaButtons = document.getElementById('hora-buttons');
+    const minutoButtons = document.getElementById('minuto-buttons');
+    const minutoContainer = document.getElementById('minuto-container');
 
-            // Exibir o resultado com os dados
-            resultadoDiv.innerHTML = `<pre>${resultadoTexto}</pre>`;
+    if (tipo === 'hora') {
+        horaButtons.style.display = 'block';
+        minutoButtons.style.display = 'none';
+    } else {
+        horaButtons.style.display = 'none';
+        minutoButtons.style.display = 'block';
 
-            // Criar o botão de copiar
-            const botaoCopiar = document.createElement('button');
-            botaoCopiar.textContent = 'Copiar';
-            botaoCopiar.className = 'copiar';
-            botaoCopiar.addEventListener('click', function() {
-                navigator.clipboard.writeText(resultadoTexto).then(() => {
-                    alert("Texto copiado para a área de transferência!");
-                }).catch(err => {
-                    alert("Erro ao copiar o texto: " + err);
+        // Criar botões de minutos de 1 a 60
+        minutoContainer.innerHTML = '';  // Limpar os botões de minutos anteriores
+        for (let i = 1; i <= 60; i++) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('hora-button');
+            button.dataset.minuto = i;
+            button.textContent = `+${i} Minuto(s)`;
+
+            // Adicionar evento de seleção
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.hora-button').forEach(btn => {
+                    btn.classList.remove('selected');
                 });
+                this.classList.add('selected');
             });
 
-            // Adicionar o botão de copiar ao resultado
-            resultadoDiv.appendChild(botaoCopiar);
-
-            // Exibir o resultado e ocultar o loader
-            resultadoDiv.style.display = 'block';
-            loader.style.display = 'none';
-        }, 1500); // Simula 1,5 segundos de espera
-    } else {
-        alert("CPF inválido!");
-        loader.style.display = 'none';
+            minutoContainer.appendChild(button);
+        }
     }
 });
 
-// Função de validação do CPF
+// Seleção de tempo (hora ou minuto)
+document.querySelectorAll('.hora-button').forEach(button => {
+    button.addEventListener('click', function() {
+        document.querySelectorAll('.hora-button').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        this.classList.add('selected');
+    });
+});
+
 function validaCPF(cpf) {
-    // Remover caracteres não numéricos
     cpf = cpf.replace(/\D/g, '');
+    if (cpf.length !== 11) return false;
 
-    // Verificar se o CPF tem 11 dígitos
-    if (cpf.length !== 11) {
-        return false;
-    }
-
-    // Validação do CPF (algoritmo padrão)
     let soma = 0;
     let resto;
 
@@ -81,24 +91,76 @@ function validaCPF(cpf) {
         soma += parseInt(cpf.charAt(i - 1)) * (11 - i);
     }
     resto = (soma * 10) % 11;
-
-    if (resto === 10 || resto === 11) {
-        resto = 0;
-    }
-
-    if (resto !== parseInt(cpf.charAt(9))) {
-        return false;
-    }
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.charAt(9))) return false;
 
     soma = 0;
     for (let i = 1; i <= 10; i++) {
         soma += parseInt(cpf.charAt(i - 1)) * (12 - i);
     }
     resto = (soma * 10) % 11;
-
-    if (resto === 10 || resto === 11) {
-        resto = 0;
-    }
-
+    if (resto === 10 || resto === 11) resto = 0;
     return resto === parseInt(cpf.charAt(10));
 }
+
+// Gerar o relatório completo
+function gerarRelatorio() {
+    const relatorioConteudo = document.getElementById('relatorio-conteudo');
+    relatorioConteudo.innerHTML = '';
+
+    solicitacoes.forEach(solicitacao => {
+        const { nome, cpf, responsavel, tempo, tipoTempo, cidade } = solicitacao;
+
+        const formatoSolicitacao = tipoTempo === 'hora' 
+            ? `+${tempo} Hora(s)`
+            : `+${tempo} Minuto(s)`;
+
+        const relatorioTexto = `
+SOLICITAÇÃO PRIORIDADE QUALIFY        
+NOME: ${nome}
+CPF: ${cpf}
+TEMPO: ${formatoSolicitacao}
+CIDADE: ${cidade}
+DOCUMENTOS ANEXADOS: ✅
+RESPONSÁVEL PELA VENDA: ${responsavel}
+        `;
+
+        const relatorioDiv = document.createElement('div');
+        relatorioDiv.classList.add('relatorio-item');
+        relatorioDiv.innerHTML = `<pre>${relatorioTexto}</pre>`;
+        relatorioConteudo.appendChild(relatorioDiv);
+    });
+}
+
+// Função para copiar o relatório completo
+document.getElementById('copiar-relatorio').addEventListener('click', function() {
+    if (solicitacoes.length === 0) {
+        alert('Nenhum registro encontrado para copiar!');
+        return;
+    }
+
+    let relatorioCompleto = '';
+    solicitacoes.forEach((solicitacao, index) => {
+        const { nome, cpf, responsavel, tempo, tipoTempo, cidade } = solicitacao;
+
+        const formatoSolicitacao = tipoTempo === 'hora' 
+            ? `+${tempo} Hora(s)`
+            : `+${tempo} Minuto(s)`;
+
+        relatorioCompleto += `
+Solicitação Prioridade Qualify
+NOME: ${nome}
+CPF: ${cpf}
+TEMPO: ${formatoSolicitacao}
+CIDADE: ${cidade}
+DOCUMENTOS ANEXADOS: ✅
+RESPONSÁVEL PELA VENDA: ${responsavel}
+        `;
+    });
+
+    navigator.clipboard.writeText(relatorioCompleto).then(() => {
+        alert("Relatório completo copiado para a área de transferência!");
+    }).catch(err => {
+        alert("Erro ao copiar o relatório: " + err);
+    });
+});
