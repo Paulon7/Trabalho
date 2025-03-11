@@ -148,7 +148,7 @@ document.getElementById('copiar-relatorio').addEventListener('click', function()
             : `+${tempo} Minuto(s)`;
 
         relatorioCompleto += `
-Solicitação Prioridade Qualify
+SOLICITAÇÃO PRIORIDADE QUALIFY
 NOME: ${nome}
 CPF: ${cpf}
 TEMPO: ${formatoSolicitacao}
